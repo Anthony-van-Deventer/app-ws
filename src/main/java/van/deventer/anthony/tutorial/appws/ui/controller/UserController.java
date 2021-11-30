@@ -1,7 +1,9 @@
 package van.deventer.anthony.tutorial.appws.ui.controller;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import van.deventer.anthony.tutorial.appws.service.UserService;
 import van.deventer.anthony.tutorial.appws.shared.dto.UserDto;
 import van.deventer.anthony.tutorial.appws.ui.model.request.UserDetailsRequestBody;
 import van.deventer.anthony.tutorial.appws.ui.model.response.UserRest;
@@ -9,6 +11,9 @@ import van.deventer.anthony.tutorial.appws.ui.model.response.UserRest;
 @RestController
 @RequestMapping("users")
 public class UserController {
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String getUser(){

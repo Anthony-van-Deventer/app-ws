@@ -1,20 +1,27 @@
-package van.deventer.anthony.tutorial.appws.shared.dto;
+package van.deventer.anthony.tutorial.appws.io.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-public class UserDto implements Serializable {
-    private static final long serialVersionUID = 1L;
-    //db ID
+@Entity(name="users")
+public class UserEntity implements Serializable {
+
+    @Id
+    @GeneratedValue
     private long id;
-    // public Id ( not sure why )
+    @Column(nullable = false)
     private String userId;
+    @Column(nullable = false, length = 50)
     private String firstName;
+    @Column(nullable = false, length = 50)
     private String lastName;
+    @Column(nullable = false, length = 120)
     private String email;
-    private String password;
+    @Column(nullable = false)
     private String encryptedPassword;
     private String emailVerificationToken;
-    private Boolean emailVerificationStatus = false;
+    @Column(nullable = false)
+    private Boolean getEmailVerificationStatus = false;
 
     public long getId() {
         return id;
@@ -56,14 +63,6 @@ public class UserDto implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getEncryptedPassword() {
         return encryptedPassword;
     }
@@ -80,11 +79,11 @@ public class UserDto implements Serializable {
         this.emailVerificationToken = emailVerificationToken;
     }
 
-    public Boolean getEmailVerificationStatus() {
-        return emailVerificationStatus;
+    public Boolean getGetEmailVerificationStatus() {
+        return getEmailVerificationStatus;
     }
 
-    public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
-        this.emailVerificationStatus = emailVerificationStatus;
+    public void setGetEmailVerificationStatus(Boolean getEmailVerificationStatus) {
+        this.getEmailVerificationStatus = getEmailVerificationStatus;
     }
 }
