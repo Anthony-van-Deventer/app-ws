@@ -53,4 +53,13 @@ public class UserServiceImpl implements UserService {
         if( userEntity == null) throw new UsernameNotFoundException(email);
         return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
     }
+
+    @Override
+    public UserDto getUser(String email) {
+        UserEntity storedUser = userRepository.findByEmail(email);
+        if(storedUser == null) throw new RuntimeException("No user with that email exists.");
+        UserDto foundUser = new UserDto();
+        BeanUtils.copyProperties(storedUser,foundUser);
+        return foundUser;
+    }
 }
