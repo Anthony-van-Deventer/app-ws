@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
@@ -28,18 +29,19 @@ public class AuthorizationFilter extends BasicAuthenticationFilter {
 
         UsernamePasswordAuthenticationToken authenticationToken = getAuthentication(request);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        boolean test = SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
         chain.doFilter(request,response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request){
-        String token = request.getHeader(SecurityConstants.TOKEN_PREFIX);
+        String token = request.getHeader(SecurityConstants.HEADER_STRING);
         token = token.replace(SecurityConstants.TOKEN_PREFIX,"");
 
         String user = Jwts.parser().setSigningKey(SecurityConstants.getTokenSecret())
                 .parseClaimsJws(token).getBody().getSubject();
 
         if(user!=null){
-            return new UsernamePasswordAuthenticationToken(user,null);
+            return new UsernamePasswordAuthenticationToken(user,null, new ArrayList<>());
         }
         return null;
     }
